@@ -4,7 +4,7 @@
         <el-select v-model="monthName" placeholder="请选择日期">
             <el-option label="1个月" value="1"></el-option>
             <el-option label="3个月" value="3"></el-option>
-            <el-option label="半年" value="6"></el-option>
+            <!--<el-option label="半年" value="6"></el-option>-->
         </el-select>
       <el-button  type="primary" v-waves icon="el-icon-search" @click="search">查询</el-button>
 
