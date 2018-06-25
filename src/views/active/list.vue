@@ -44,6 +44,13 @@
             <span>{{scope.row.total}}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="操作" >
+          <template slot-scope="scope">
+              <el-button-group>
+                  <el-button icon="el-icon-search" type="info" size="mini" v-waves @click="detail(scope.row.terminalNo)">查看</el-button>
+              </el-button-group>
+          </template>
+      </el-table-column>
 
     </el-table>
 
@@ -53,6 +60,7 @@
                      layout="total, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
+      <machine :visible="visible" :terminalNo="terminalNo" title="终端详情"  @closeDialog="handlerDialogClose"></machine>
   </div>
 </template>
 
@@ -60,10 +68,14 @@
   import { tradeNumber } from '@/api/active';
   import waves from '@/directive/waves';
   import { parseTime } from '@/utils';
+  import Machine from '../components/machine'
 
   export default {
     directives: {
       waves
+    },
+    components: {
+      Machine
     },
     data() {
       return {
@@ -77,6 +89,8 @@
           limit: 10,
           month: 1
         },
+        terminalNo:'',
+        visible:false
       }
     },
     filters: {
@@ -113,6 +127,13 @@
           this.listQuery.month = this.monthName;
         }
         this.getList()
+      },
+      handlerDialogClose() {
+        this.visible = false;
+      },
+      detail(terminalNo){
+        this.terminalNo = terminalNo
+        this.visible = true
       }
     }
   }

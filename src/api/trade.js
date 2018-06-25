@@ -15,3 +15,19 @@ export function listUnTradeMachine(params) {
     data: params
   })
 }
+export function getTradeInfo(params) {
+  return request({
+    url: 'Analyze/getTradeInfo',
+    method: 'post',
+    data: params
+  })
+}
+export function machineCount(params) {
+  return request({
+    url: 'Analyze/machineCount',
+    method: 'post',
+    data: params
+  })
+}
+
+

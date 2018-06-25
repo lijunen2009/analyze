@@ -1,63 +1,79 @@
 <template>
   <el-row class="panel-group" :gutter="40">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class='card-panel' @click="handleSetLineChartData('newVisitis')">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">用户数量</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="102400" :duration="2600"></count-to>
+          <count-to class="card-panel-num" :startVal="0" :endVal="parseInt(data.total_user)" :duration="500"></count-to>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('messages')">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+          <svg-icon icon-class="pos" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">商家数量</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="81212" :duration="3000"></count-to>
+          <div class="card-panel-text">终端数量</div>
+          <count-to class="card-panel-num" :startVal="0" :endVal="parseInt(data.total_machine)" :duration="3000"></count-to>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('purchases')">
         <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
+          <svg-icon icon-class="active" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">订单数量</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="9280" :duration="3200"></count-to>
+          <div class="card-panel-text">激活终端数量</div>
+          <count-to class="card-panel-num" :startVal="0" :endVal="parseInt(data.active_machine)" :duration="3200"></count-to>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-        <div class="card-panel-icon-wrapper icon-shoppingCard">
-          <svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">订单数量</div>
-          <count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to>
-        </div>
-      </div>
-    </el-col>
+    <!--<el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">-->
+      <!--<div class="card-panel" @click="handleSetLineChartData('shoppings')">-->
+        <!--<div class="card-panel-icon-wrapper icon-shoppingCard">-->
+          <!--<svg-icon icon-class="shoppingCard" class-name="card-panel-icon" />-->
+        <!--</div>-->
+        <!--<div class="card-panel-description">-->
+          <!--<div class="card-panel-text">订单数量</div>-->
+          <!--<count-to class="card-panel-num" :startVal="0" :endVal="13600" :duration="3600"></count-to>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</el-col>-->
   </el-row>
 </template>
 
 <script>
 import CountTo from 'vue-count-to'
+import { machineCount } from '@/api/trade';
 
 export default {
+  data(){
+    return {
+      data:{}
+    }
+  },
   components: {
     CountTo
+  },
+  created(){
+    this.getData()
   },
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
+    },
+    getData(){
+      machineCount().then(response=>{
+        console.log(response)
+        this.data = response.data.result
+      })
     }
+
   }
 }
 </script>
