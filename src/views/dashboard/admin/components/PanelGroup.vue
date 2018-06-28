@@ -69,7 +69,6 @@ export default {
     },
     getData(){
       machineCount().then(response=>{
-        console.log(response)
         this.data = response.data.result
       })
     }

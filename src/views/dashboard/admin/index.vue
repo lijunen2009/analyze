@@ -4,43 +4,47 @@
 
     <panel-group @handleSetLineChartData="handleSetLineChartData"></panel-group>
 
-    <!--<el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData"></line-chart>
     </el-row>
 
     <el-row :gutter="32">
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
-          <raddar-chart></raddar-chart>
+          <BarChartQuarterTrade></BarChartQuarterTrade>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
-          <pie-chart></pie-chart>
+          <BarChartMonthTrade></BarChartMonthTrade>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+    </el-row>
+    <el-row :gutter="32">
+      <el-col :xs="24" :sm="24" :lg="12">
         <div class="chart-wrapper">
-          <bar-chart></bar-chart>
+          <BarChartQuarterActive></BarChartQuarterActive>
         </div>
       </el-col>
-    </el-row>-->
+      <el-col :xs="24" :sm="24" :lg="12">
+        <div class="chart-wrapper">
+          <BarChartMonthActive></BarChartMonthActive>
+        </div>
+      </el-col>
+    </el-row>
 
 
   </div>
 </template>
 
 <script>
-import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
-import TransactionTable from './components/TransactionTable'
-import TodoList from './components/TodoList'
-import BoxCard from './components/BoxCard'
-
+import BarChartMonthTrade from './components/BarChartMonthTrade'
+import BarChartQuarterTrade from './components/BarChartQuarterTrade'
+import BarChartQuarterActive from './components/BarChartQuarterActive'
+import BarChartMonthActive from './components/BarChartMonthActive'
+import { countByMonth } from '@/api/trade';
 const lineChartData = {
   newVisitis: {
     expectedData: [100, 120, 161, 134, 105, 160, 165],
@@ -63,24 +67,31 @@ const lineChartData = {
 export default {
   name: 'dashboard-admin',
   components: {
-    GithubCorner,
     PanelGroup,
     LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart,
-    TransactionTable,
-    TodoList,
-    BoxCard
+    BarChartMonthTrade,
+    BarChartQuarterTrade,
+    BarChartQuarterActive,
+    BarChartMonthActive
+
   },
   data() {
     return {
       lineChartData: lineChartData.newVisitis
     }
   },
+  created(){
+    console.log('hello')
+    this.countByMonth()
+  },
   methods: {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
+    },
+    countByMonth(){
+      countByMonth().then(response=>{
+        console.log(response)
+      })
     }
   }
 }

@@ -2,9 +2,9 @@
   <div class="app-container calendar-list-container" v-loading="listLoading" element-loading-text="加载中">
     <div class="filter-container">
         <el-select v-model="monthName" placeholder="请选择日期">
-            <el-option label="1个月" value="1"></el-option>
-            <el-option label="3个月" value="3"></el-option>
-            <!--<el-option label="半年" value="6"></el-option>-->
+            <el-option label="本月" value="1"></el-option>
+            <el-option label="前一个月" value="2"></el-option>
+            <el-option label="本季度" value="3"></el-option>
         </el-select>
       <el-button  type="primary" v-waves icon="el-icon-search" @click="search">查询</el-button>
 
@@ -69,7 +69,7 @@
         list: null,
         total: null,
         listLoading: true,
-        monthName:'1个月',
+        monthName:'本月',
         listQuery: {
           page: 1,
           limit: 10,

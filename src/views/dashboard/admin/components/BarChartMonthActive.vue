@@ -6,7 +6,8 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
-
+import { listActiveTop5 } from '@/api/trade';
+import { fromatMoney } from '@/filters/index';
 const animationDuration = 6000
 
 export default {
@@ -26,11 +27,12 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+
     }
   },
   mounted() {
-    this.initChart()
+    this.listActiveTop5()
     this.__resizeHanlder = debounce(() => {
       if (this.chart) {
         this.chart.resize()
@@ -47,10 +49,13 @@ export default {
     this.chart = null
   },
   methods: {
-    initChart() {
+    initChart(xdata,seriesData) {
       this.chart = echarts.init(this.$el, 'macarons')
 
       this.chart.setOption({
+        title : {
+          text: '本月交易笔数top5',
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -58,7 +63,7 @@ export default {
           }
         },
         grid: {
-          top: 10,
+          top: 50,
           left: '2%',
           right: '2%',
           bottom: '3%',
@@ -66,7 +71,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: xdata,
           axisTick: {
             alignWithLabel: true
           }
@@ -78,27 +83,24 @@ export default {
           }
         }],
         series: [{
-          name: 'pageA',
+          name: '交易笔数',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
+          data: seriesData,
           animationDuration
         }]
+      })
+    },
+    listActiveTop5(){
+      listActiveTop5().then(response=>{
+        let xdata =[]
+        let seriesData = []
+       response.data.result.month.map(item=>{
+         xdata.push(item.merchantName)
+         seriesData.push(item.total)
+       })
+        this.initChart(xdata,seriesData)
       })
     }
   }

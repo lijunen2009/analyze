@@ -29,5 +29,23 @@ export function machineCount(params) {
     data: params
   })
 }
+export function listTradeTop5() {
+  return request({
+    url: 'Analyze/listTradeTop5',
+    method: 'post',
+  })
+}
+export function listActiveTop5() {
+  return request({
+    url: 'Analyze/listActiveTop5',
+    method: 'post',
+  })
+}
+export function countByMonth() {
+  return request({
+    url: 'Analyze/countByMonth',
+    method: 'post',
+  })
+}
 
 
