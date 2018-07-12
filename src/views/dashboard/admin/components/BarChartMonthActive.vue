@@ -7,7 +7,6 @@ import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
 import { listActiveTop5 } from '@/api/trade';
-import { fromatMoney } from '@/filters/index';
 const animationDuration = 6000
 
 export default {

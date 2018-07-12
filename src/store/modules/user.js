@@ -1,6 +1,5 @@
 import { loginByUsername, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-
 const user = {
   state: {
     user: '',
@@ -49,10 +48,12 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
-          const data = response.data
-          commit('SET_TOKEN', data.token)
-          setToken(response.data.token)
-          resolve()
+          if(response.data.status == 200){
+            const data = response.data.result
+            commit('SET_TOKEN', data.token)
+            setToken(response.data.token)
+          }
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

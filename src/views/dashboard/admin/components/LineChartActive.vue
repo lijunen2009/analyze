@@ -6,7 +6,6 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
-
 export default {
   props: {
     className: {
@@ -72,10 +71,13 @@ export default {
     }
   },
   methods: {
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({trade,active } = {}) {
       this.chart.setOption({
+        title : {
+          text: '本年POS机激活台数走势图',
+        },
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月'],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -85,7 +87,7 @@ export default {
           left: 10,
           right: 10,
           bottom: 20,
-          top: 30,
+          top: 50,
           containLabel: true
         },
         tooltip: {
@@ -101,50 +103,32 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['激活台数']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: '激活台数', itemStyle: {
             normal: {
-              color: '#FF005A',
+              color: '#409EFF',
               lineStyle: {
-                color: '#FF005A',
+                color: '#409EFF',
                 width: 2
               }
             }
           },
           smooth: true,
           type: 'line',
-          data: expectedData,
+          data: active,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+        ]
       })
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     }
+
   }
 }
 </script>

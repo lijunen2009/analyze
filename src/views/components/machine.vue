@@ -6,6 +6,7 @@
             <el-table :data="list" border fit highlight-current-row style="width: 100%">
                 <el-table-column align="center" label="序号" type="index" width="90">
                 </el-table-column>
+
                 <el-table-column align="center" label="终端号">
                     <template slot-scope="scope">
                         <span>{{scope.row.terminalNo}}</span>
@@ -29,7 +30,7 @@
                 </el-table-column>
                 <el-table-column align="center" label="交易时间">
                     <template slot-scope="scope">
-                        <span>{{scope.row.addtime|parseTime }}</span>
+                        <span>{{scope.row.tradeTime}}</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -98,7 +99,7 @@
 
 <script>
   import {getTradeInfo} from '@/api/trade';
-  import {parseTime} from '@/filters/index';
+  import {formatDate,parseTime} from '@/filters/index';
 
   export default {
     data() {
@@ -168,7 +169,6 @@
           terminal_no: this.terminalNo
         }
         getTradeInfo(params).then(response => {
-          console.log(response)
           this.list = response.data.result.trade
           this.oa.member = response.data.result.oa_info.member;
           this.oa.machine = response.data.result.oa_info.machine;

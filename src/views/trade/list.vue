@@ -1,11 +1,15 @@
 <template>
   <div class="app-container calendar-list-container" v-loading="listLoading" element-loading-text="加载中">
     <div class="filter-container">
-        <el-select v-model="monthName" placeholder="请选择日期">
-            <el-option label="本月" value="1"></el-option>
-            <el-option label="前一个月" value="2"></el-option>
-            <el-option label="本季度" value="3"></el-option>
-        </el-select>
+        <el-date-picker
+                v-model="queryDate"
+                type="daterange"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+        </el-date-picker>
       <el-button  type="primary" v-waves icon="el-icon-search" @click="search">查询</el-button>
 
     </div>
@@ -34,20 +38,25 @@
             <span>{{scope.row.merchantNo}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="商户名称名称" >
+      <el-table-column align="center" label="商户名称" >
         <template slot-scope="scope">
             <span>{{scope.row.merchantName}}</span>
         </template>
       </el-table-column>
+        <el-table-column align="center" label="商户电话" >
+            <template slot-scope="scope">
+                <span>{{scope.row.merchantPhone}}</span>
+            </template>
+        </el-table-column>
       <el-table-column align="center" label="交易金额（元）" >
         <template slot-scope="scope">
-            <span>{{scope.row.total|fromatMoney}}</span>
+            <span>{{scope.row.tradeAmt|fromatMoney}}</span>
         </template>
       </el-table-column>
         <el-table-column align="center" label="操作" >
             <template slot-scope="scope">
                 <el-button-group>
-                    <el-button icon="el-icon-search" type="info" size="mini" v-waves @click="detail(scope.row.terminalNo)">查看</el-button>
+                    <el-button icon="el-icon-view" type="info" size="mini" v-waves @click="detail(scope.row.terminalNo)">查看</el-button>
                 </el-button-group>
             </template>
         </el-table-column>
@@ -68,6 +77,11 @@
   import waves from '@/directive/waves';
   import { fromatMoney } from '@/filters/index';
   import Machine from '../components/machine'
+  let myDate = new Date();
+  let year =  myDate.getFullYear()
+  let month =  myDate.getMonth()+1
+  let day =  myDate.getDate()
+
   export default {
     directives: {
       waves
@@ -81,17 +95,21 @@
         list: null,
         total: null,
         listLoading: true,
-        monthName:'本月',
         listQuery: {
           page: 1,
           limit: 10,
-          month: 1
+          start_date: '',
+          end_date:''
         },
         terminalNo:'',
-        visible:false
+        visible:false,
+        queryDate:[year+'-'+month+'-1',year+'-'+month+'-'+day]
       }
     },
     filters: {
+
+    },
+    computed:{
 
     },
     created() {
@@ -119,11 +137,8 @@
         this.getList()
       },
       search() {
-        if(this.monthName == '1个月'){
-          this.listQuery.month = 1;
-        }else{
-          this.listQuery.month = this.monthName;
-        }
+        this.listQuery.start_date = this.queryDate[0]
+        this.listQuery.end_date = this.queryDate[1]
         this.getList()
       },
       handlerDialogClose() {

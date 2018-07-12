@@ -112,3 +112,11 @@ export function fromatMoney(value) {
     return parseInt(val/10000)+'万'
   }
 }
+
+export function formatDate(value){
+  const myDate = new  Date(value)
+  let year =  myDate.getFullYear()
+  let month =  myDate.getMonth()+1
+  let day =  myDate.getDate()
+  return year+'-'+month+'-'+day;
+}

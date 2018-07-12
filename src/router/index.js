@@ -113,6 +113,22 @@ export const asyncRouterMap = [
         },
       ]
     },
+  {
+    path: '/return_cash',
+    component: Layout,
+    name: 'return_cash',
+    meta: {
+      title: '',
+    },
+    children: [
+      {
+        path: 'index',
+        component: _import('return-cash/index'),
+        name: 'index',
+        meta: {title: '返现金额', icon: 'order', noCache: true}
+      },
+    ]
+  },
 /*    {
         path: '/test',
         component: Layout,
