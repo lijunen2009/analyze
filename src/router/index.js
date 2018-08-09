@@ -129,6 +129,22 @@ export const asyncRouterMap = [
       },
     ]
   },
+  {
+      path: '/guest',
+      component: Layout,
+      name: 'guest',
+      meta: {
+        title: '',
+      },
+      children: [
+        {
+          path: 'list',
+          component: _import('guest/list'),
+          name: 'trade_list',
+          meta: {title: '客勤维护', icon: 'order', noCache: true}
+        },
+      ]
+    },
 /*    {
         path: '/test',
         component: Layout,
