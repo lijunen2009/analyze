@@ -51,7 +51,7 @@ const user = {
           if(response.data.status == 200){
             const data = response.data.result
             commit('SET_TOKEN', data.token)
-            setToken(response.data.token)
+            setToken(data.token)
           }
           resolve(response)
         }).catch(error => {

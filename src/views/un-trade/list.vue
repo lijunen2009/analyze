@@ -35,6 +35,16 @@
             <span>{{scope.row.merchantName}}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="代理商号" >
+        <template slot-scope="scope">
+            <span>{{scope.row.agentNo}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="代理商名称" >
+        <template slot-scope="scope">
+            <span>{{scope.row.agentName}}</span>
+        </template>
+      </el-table-column>
         <el-table-column align="center" label="操作" class-name="small-padding fixed-width" width="200">
             <template slot-scope="scope">
                 <el-button-group>
