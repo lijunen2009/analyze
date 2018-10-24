@@ -20,7 +20,7 @@
                         <svg-icon icon-class="cash_money" class-name="card-panel-icon" />
                     </div>
                     <div class="card-panel-description">
-                        <div class="card-panel-text">可提现总金额</div>
+                        <div class="card-panel-text">待提现总金额</div>
                         <count-to class="card-panel-num" :startVal="0" :endVal="parseInt(cash_money)" :duration="500"></count-to>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     <span>{{scope.row.platform_name}}</span>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="可提现金额" >
+            <el-table-column align="center" label="待提现金额" >
                 <template slot-scope="scope">
                     <span>{{scope.row.value}}</span>
                 </template>
