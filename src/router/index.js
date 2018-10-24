@@ -140,8 +140,8 @@ export const asyncRouterMap = [
         {
           path: 'list',
           component: _import('guest/list'),
-          name: 'trade_list',
-          meta: {title: '客勤维护', icon: 'order', noCache: true}
+          name: 'guest_list',
+          meta: {title: '客情维护', icon: 'order', noCache: true}
         },
       ]
     },
